@@ -10,14 +10,28 @@ export default (appInfo: EggAppInfo) => {
   // add your egg config in here
   config.middleware = [];
 
-  // add your special config in here
-  const bizConfig = {
-    sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+  // blog config
+  const blogConfig = {
+    indexArticleNum: 5,
+  };
+
+  // db config
+  const mysql = {
+    client: {
+      host: 'localhost',
+      port: '3306',
+      user: 'tanjiawei',
+      password: '123456',
+      database: 'techsite',
+    },
+    app: true,
+    agent: false,
   };
 
   // the return config will combines to EggAppConfig
   return {
     ...config,
-    ...bizConfig,
+    blogConfig,
+    mysql,
   };
 };
