@@ -5,6 +5,9 @@ export default (app: Application) => {
 
   router.get('/', controller.home.index);
 
-  const blogPrefix = '/blog';
+  const blogPrefix: string = '/blog';
+  // 首页数据
   router.get(`${blogPrefix}/index`, controller.blog.getIndexList);
+  // 文章详情
+  router.get(`${blogPrefix}/article/:id`, controller.blog.getArticleDetail)
 };
