@@ -13,6 +13,6 @@ export default class BlogController extends Controller {
       id: { required: true, convertType: 'number', type: 'int', min: 1 }
     }, ctx.params)
     // 参数检验通过后，调用 service 获取数据
-    ctx.body = await ctx.service.article.getArticleDetail(ctx.params.id as number);
+    ctx.body = await ctx.service.article.getArticleDetail(ctx.params.id); // TypeScript 不会检查对 any 类型的值进行类型检查
   }
 }
