@@ -34,12 +34,10 @@ export default class BlogController extends Controller {
     const num: number = 10; // 一页 10 条数据
     const { ctx } = this;
     ctx.validate({
-      tag: { required: true, type: 'string', trim: true }
-    }, ctx.params);
-    ctx.validate({
-      index: { required: true, convertType: 'number', type: 'int', min: 1 }
+      index: { required: true, convertType: 'number', type: 'int', min: 1 },
+      tag: { required: true, type: 'string', trim: true },
     }, ctx.query);
-    ctx.body = await ctx.service.article.getArticleByTag(ctx.params.tag, ctx.query.index, num);
+    ctx.body = await ctx.service.article.getArticleByTag(ctx.query.tag, ctx.query.index, num);
   }
 
   async save (): Promise<void> {

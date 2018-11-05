@@ -15,7 +15,7 @@ export default (app: Application) => {
   // 所有标签
   router.get(`${blogPrefix}/tags`, controller.blog.getAllTags)
   // 根据标签查询文章
-  router.get(`${blogPrefix}/tag/:tag`, controller.blog.getArticleByTag)
+  router.get(`${blogPrefix}/tag/list`, controller.blog.getArticleByTag)
   // 保存文章
   router.post(`${blogPrefix}/save`, controller.blog.save)
 };
