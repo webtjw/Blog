@@ -41,8 +41,12 @@ export default class BlogController extends Controller {
   }
 
   async save (): Promise<void> {
-    const { ctx } = this
-    console.log(ctx.request.body)
+    const { ctx } = this;
     ctx.body = ctx.request.body
+  }
+
+  async login (token: string): Promise<void> {
+    const { ctx } = this;
+    ctx.body = await this.ctx.service.article.checkDeveloper(token);
   }
 }

@@ -46,4 +46,13 @@ export default class Article extends Service {
     });
     return rows;
   }
+
+  async checkDeveloper (token): Promise<string> {
+    const rows: any[] = await this.app.mysql.query(`SELECT name FROM developer WHERE token='${token}'`) as any[];
+    if (rows.length) {
+      return rows[0];
+    } else {
+      throw new Error('登入令牌错误');
+    }
+  }
 }
