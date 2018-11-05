@@ -7,8 +7,8 @@ export default (appInfo: EggAppInfo) => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1540994311817_618';
 
-  // add your egg config in here
-  config.middleware = [];
+  // 中间件列表（中间件也可以在这里拥有配置，查看文档）
+  config.middleware = ['normalizeReturn'];
 
   // blog config
   const blogConfig = {
