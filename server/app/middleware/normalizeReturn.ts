@@ -1,13 +1,12 @@
 import { Context } from 'egg';
+import utils from '../utils';
 
 export default function normalizeReturn (): any {
   return async (ctx: Context, next: () => Promise<any>) => {
     await next();
-    const { response } = ctx;
-    if ((response.header['content-type'] as string).includes('application/json')) {
-      response.body = response.body
-        ? { success: true, data: response.body }
-        : { success: false, data: 'error' }
+    const { response, response: { body } } = ctx;
+    if ((response.headers['content-type'] as string).includes('application/json')) {
+      response.body = utils.normalizeOutput(!!body, body);
     }
   }
 }

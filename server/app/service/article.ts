@@ -47,7 +47,7 @@ export default class Article extends Service {
     return rows;
   }
 
-  async checkDeveloper (token): Promise<string> {
+  async checkDeveloper (token: string): Promise<string> {
     const rows: any[] = await this.app.mysql.query(`SELECT name FROM developer WHERE token='${token}'`) as any[];
     if (rows.length) {
       return rows[0];

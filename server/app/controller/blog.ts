@@ -45,8 +45,17 @@ export default class BlogController extends Controller {
     ctx.body = ctx.request.body
   }
 
-  async login (token: string): Promise<void> {
+  async login (): Promise<void> {
     const { ctx } = this;
-    ctx.body = await this.ctx.service.article.checkDeveloper(token);
+    ctx.validate({
+      token: { required: true, type: 'string', trim: true },
+    }, ctx.request.body);
+    ctx.body = await this.ctx.service.article.checkDeveloper(ctx.request.body.token);
+  }
+
+  defendCSRF (): void {
+    const { ctx } = this
+    ctx.status = 204
+    ctx.body = ''
   }
 }

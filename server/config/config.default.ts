@@ -1,4 +1,6 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
+import { Context } from 'egg';
+import utils from '../app/utils';
 
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
@@ -33,5 +35,11 @@ export default (appInfo: EggAppInfo) => {
     ...config,
     blogConfig,
     mysql,
+    onerror: {
+      json (err: Error, ctx: Context) {
+        ctx.status = 200;
+        ctx.body = utils.normalizeOutput(false, err.message);
+      }
+    },
   };
 };

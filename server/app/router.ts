@@ -18,4 +18,8 @@ export default (app: Application) => {
   router.get(`${blogPrefix}/tag/list`, controller.blog.getArticleByTag)
   // 保存文章
   router.post(`${blogPrefix}/save`, controller.blog.save)
+  // 登入
+  router.post(`${blogPrefix}/login`, controller.blog.login)
+  // csrf
+  router.post(`${blogPrefix}/csrf`, controller.blog.defendCSRF)
 };
