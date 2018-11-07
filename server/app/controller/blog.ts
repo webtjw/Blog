@@ -1,12 +1,12 @@
 import { Controller } from "egg";
 
 export default class BlogController extends Controller {
-  async getIndexList(): Promise<void> {
+  async getIndexList (): Promise<void> {
     const { ctx } = this;
     ctx.body = await ctx.service.article.getLatestArticle();
   }
 
-  async getArticleDetail(): Promise<void> {
+  async getArticleDetail (): Promise<void> {
     const { ctx } = this;
     // 参数基本都是字符串类型，必须使用 convertType 先进性类型转换。校验失败会抛出错误，由应用顶层捕捉返回
     ctx.validate({
