@@ -34,6 +34,7 @@ export default (appInfo: EggAppInfo) => {
     },
     onerror: {
       json (err: DiffError, ctx: Context) {
+        console.log(err)
         ctx.status = 200;
         // egg 自报的错误没有 type 属性
         const isBusinessError: boolean = err.type !== undefined && err.type === DiffErrorTypes.business;
