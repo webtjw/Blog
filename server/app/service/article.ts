@@ -1,4 +1,6 @@
 import { Service } from 'egg';
+import DiffError, { DiffErrorTypes } from '../utils/diffError';
+const md5 = require('blueimp-md5'); // TODO this module needs to be declared
 
 export default class Article extends Service {
   async getLatestArticle (): Promise<any[]> {
@@ -50,9 +52,36 @@ export default class Article extends Service {
   async checkDeveloper (token: string): Promise<string> {
     const rows: any[] = await this.app.mysql.query(`SELECT name FROM developer WHERE token='${token}'`) as any[];
     if (rows.length) {
-      return rows[0];
+      return rows[0].name;
     } else {
-      throw new Error('登入令牌错误');
+      throw new DiffError('登入口令错误', DiffErrorTypes.business);
     }
+  }
+
+  async checkCookieDev (): Promise<boolean> {
+    const { ctx } = this;
+    let isDeveloper: boolean = false;
+    const cookieDev = ctx.cookies.get('dev', { signed: false });
+    if (cookieDev) {
+      isDeveloper = await this.isLegalCookieDev(cookieDev)
+    }
+    return isDeveloper
+  }
+
+  async isLegalCookieDev (cookie: string): Promise<boolean> {
+    const { app } = this;
+    const id: string = cookie.slice(-1);
+    if (/\d/.test(id)) {
+      const result = await app.mysql.query(`SELECT name FROM developer WHERE id=${id}`) as any[];
+      if (result && result.length) {
+        const name = result[0].name;
+        return this.encodeCookieDev(parseInt(id, 10), name) === cookie;
+      }
+    }
+    return false;
+  }
+
+  encodeCookieDev (id: number, name: string): string {
+    return md5(name, this.config.blogConfig.devCookieKey) + id;
   }
 }

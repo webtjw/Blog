@@ -1,6 +1,6 @@
 const utils = {
-  normalizeOutput (success: boolean, data: any) {
-    return { success, data }
+  normalizeOutput (finish: boolean, success: boolean, data: any) {
+    return { finish, success, data }
   }
 }
 

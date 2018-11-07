@@ -4,9 +4,7 @@ import utils from '../utils';
 export default function normalizeReturn (): any {
   return async (ctx: Context, next: () => Promise<any>) => {
     await next();
-    const { response, response: { body, headers } } = ctx;
-    if (headers['content-type'] && (headers['content-type'] as string).includes('application/json')) {
-      response.body = utils.normalizeOutput(!!body, body);
-    }
+    // 业务错误（只能使用 throw Error 方式），代码错误只会跑到 config.error 中去
+    ctx.body = utils.normalizeOutput(true, true, ctx.body);
   }
 }

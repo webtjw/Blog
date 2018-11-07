@@ -53,9 +53,8 @@ export default class BlogController extends Controller {
     ctx.body = await this.ctx.service.article.checkDeveloper(ctx.request.body.token);
   }
 
-  defendCSRF (): void {
-    const { ctx } = this
-    ctx.status = 204
-    ctx.body = ''
+  async checkCookieDev (): Promise<void> {
+    const { ctx } = this;
+    ctx.body = await ctx.service.article.checkCookieDev();
   }
 }

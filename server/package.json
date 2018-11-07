@@ -21,6 +21,7 @@
     "clean": "ets clean"
   },
   "dependencies": {
+    "blueimp-md5": "^2.10.0",
     "egg": "^2.6.1",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.6.0",

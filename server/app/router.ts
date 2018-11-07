@@ -21,5 +21,5 @@ export default (app: Application) => {
   // 登入
   router.post(`${blogPrefix}/login`, controller.blog.login)
   // csrf
-  router.get(`${blogPrefix}/csrf`, controller.blog.defendCSRF)
+  router.get(`${blogPrefix}/isDeveloper`, controller.blog.checkCookieDev)
 };
