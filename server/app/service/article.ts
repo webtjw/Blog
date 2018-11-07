@@ -49,10 +49,17 @@ export default class Article extends Service {
     return rows;
   }
 
-  async checkDeveloper (token: string): Promise<string> {
-    const rows: any[] = await this.app.mysql.query(`SELECT name FROM developer WHERE token='${token}'`) as any[];
+  async login (token: string): Promise<string> {
+    const { app, ctx, config } = this;
+    const rows: any[] = await app.mysql.query(`SELECT id,name FROM developer WHERE token='${token}'`) as any[];
     if (rows.length) {
-      return rows[0].name;
+      const [ { id, name } ] = rows;
+      ctx.cookies.set('dev', this.encodeCookieDev(parseInt(id, 10), name), {
+        httpOnly: true,
+        maxAge: config.blogConfig.devCookieMaxAge,
+        signed: true,
+      });
+      return name;
     } else {
       throw new DiffError('登入口令错误', DiffErrorTypes.business);
     }
@@ -61,7 +68,7 @@ export default class Article extends Service {
   async checkCookieDev (): Promise<boolean> {
     const { ctx } = this;
     let isDeveloper: boolean = false;
-    const cookieDev = ctx.cookies.get('dev', { signed: false });
+    const cookieDev = ctx.cookies.get('dev', { signed: true });
     if (cookieDev) {
       isDeveloper = await this.isLegalCookieDev(cookieDev)
     }

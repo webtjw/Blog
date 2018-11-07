@@ -50,7 +50,7 @@ export default class BlogController extends Controller {
     ctx.validate({
       token: { required: true, type: 'string', trim: true },
     }, ctx.request.body);
-    ctx.body = await this.ctx.service.article.checkDeveloper(ctx.request.body.token);
+    ctx.body = await this.ctx.service.article.login(ctx.request.body.token);
   }
 
   async checkCookieDev (): Promise<void> {

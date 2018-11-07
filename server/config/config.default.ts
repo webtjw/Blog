@@ -18,7 +18,8 @@ export default (appInfo: EggAppInfo) => {
     ...config,
     blogConfig: {
       indexArticleNum: 5,
-      devCookieKey: 'JXU1OUFFJXU1M0VGJXU3RjU3JXU1QkJF'
+      devCookieKey: 'JXU1OUFFJXU1M0VGJXU3RjU3JXU1QkJF',
+      devCookieMaxAge: 3600000 * 4,
     },
     mysql: {
       client: {
