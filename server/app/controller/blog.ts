@@ -42,7 +42,15 @@ export default class BlogController extends Controller {
 
   async save (): Promise<void> {
     const { ctx } = this;
-    ctx.body = ctx.request.body
+    ctx.validate({
+      id: { required: false, convertType: 'number', type: 'int', min: 1 },
+      title: { required: true, type: 'string', trim: true },
+      tags: { required: true, type: 'array', itemType: 'string', min: 1 },
+      antecedent: { required: true, type: 'string', trim: true },
+      code: { required: true, type: 'string', trim: true },
+    }, ctx.request.body);
+    const { id, tags, title, antecedent, code } = ctx.request.body;
+    ctx.body = await ctx.service.article.save(id || 0, title, tags, antecedent, code);
   }
 
   async login (): Promise<void> {
